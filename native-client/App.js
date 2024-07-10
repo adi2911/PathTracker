@@ -14,7 +14,7 @@ const switchNavigator = createSwitchNavigator({
     SignUp: SignUpScreen,
     SignInScreen: SignInScreen,
   }),
-  mainFLow: createMaterialBottomNavigator({
+  mainFlow: createMaterialBottomNavigator({
     trackListFLow: createStackNavigator({
       TrackList: TrackListScreen,
       TrackDetail: TrackDetailScreen,
