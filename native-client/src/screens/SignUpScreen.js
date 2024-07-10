@@ -46,9 +46,8 @@ const SignUpScreen = ({ navigation }) => {
       </Spacer>
       <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
         <Spacer>
-          <Text style={styles.link}>
-            Already have and account? Sign In Instead
-          </Text>
+          <Text style={styles.link}>Already have and account? </Text>
+          <Text style={styles.link}>Sign In Instead</Text>
         </Spacer>
       </TouchableOpacity>
     </View>
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
 });
 
 //navigationOptions can also be assinged as an object instead of function
-SignupScreen.navigationOptions = () => {
+SignUpScreen.navigationOptions = () => {
   return {
     headerShown: false, // to remove the header in the mobile application for this particular screen
   };
