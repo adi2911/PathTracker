@@ -30,10 +30,28 @@ const signUp = (dispatch) => {
 };
 
 const signIn = (dispatch) => {
-  return ({ email, password }) => {
-    //api request to signIn with the email and password
-    //modify state for updating the authentication
-    //if signIn fails throw error
+  return async ({ email, password }) => {
+    try {
+      //api request to signin with the email and password
+      const response = await trackerApi.post("/signin", { email, password });
+
+      //modify state for updating the authentication in async store
+      await AsyncStorage.setItem("token", response.data.token);
+      dispatch({
+        type: "signin",
+        payload: response.data.token,
+      });
+
+      //navigate back to main flow
+      navigate("TrackList", "");
+    } catch (err) {
+      //if signin fails throw error
+      dispatch({
+        type: "add_error",
+        payload: "Something went wrong with signin",
+      });
+      console.log(err.response.data);
+    }
   };
 };
 
@@ -44,8 +62,12 @@ const signOut = (dispatch) => {
   };
 };
 
+const clearErrorMessage = (dispatch) => () => {
+  dispatch({ type: "clear_error_message" });
+};
+
 export const { Context, Provider } = createDataContext(
   authReducer,
-  { signIn, signOut, signUp },
+  { signIn, signOut, signUp, clearErrorMessage },
   { token: null, errorMessage: "" }
 );

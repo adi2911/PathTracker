@@ -7,9 +7,13 @@ import { Context as AuthContext } from "../context/AuthContext";
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state, signUp } = useContext(AuthContext);
+  const { state, signUp, clearErrorMessage } = useContext(AuthContext);
   return (
     <View style={styles.container}>
+      <NavigationEvents
+        onWillFocus={clearErrorMessage}
+        onWillBlur={clearErrorMessage}
+      />
       <Spacer>
         <Text h3> SignUp for Tracker</Text>
       </Spacer>

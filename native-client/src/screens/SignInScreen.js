@@ -1,15 +1,20 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Input, Text } from "react-native-elements";
+import { NavigationEvents } from "react-navigation";
 import Spacer from "../components/spacer";
 import { Context as AuthContext } from "../context/AuthContext";
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state, signIn } = useContext(AuthContext);
+  const { state, signIn, clearErrorMessage } = useContext(AuthContext);
   return (
     <View style={styles.container}>
+      <NavigationEvents
+        onWillFocus={clearErrorMessage}
+        onWillBlur={clearErrorMessage}
+      />
       <Spacer>
         <Text h3> SignIn for Tracker</Text>
       </Spacer>
@@ -58,7 +63,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    marginBottom: 150, // To add extra space in the bottom and not keep it completely in the center
   },
   errorMessage: {
     fontSize: 16,
