@@ -3,16 +3,18 @@ import createMaterialBottomNavigator from "react-navigation-material-bottom-tabs
 import { createStackNavigator } from "react-navigation-stack";
 
 import { Provider as AuthProvider } from "./src/context/AuthContext";
+import { setNavigator } from "./src/navigationRef";
+
 import AccountScreen from "./src/screens/AccountScreen";
+import AutomaticSignInScreen from "./src/screens/AutomaticSignInScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 
-import { setNavigator } from "./src/navigationRef";
-
 const switchNavigator = createSwitchNavigator({
+  AutomaticSignIn: AutomaticSignInScreen, //should be shown by default
   loginFLow: createStackNavigator({
     SignUp: SignUpScreen,
     SignInScreen: SignInScreen,

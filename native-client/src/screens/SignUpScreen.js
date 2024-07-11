@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Input, Text } from "react-native-elements";
 import Spacer from "../components/spacer";
@@ -8,6 +8,7 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { state, signUp, clearErrorMessage } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <NavigationEvents

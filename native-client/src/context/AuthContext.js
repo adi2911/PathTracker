@@ -66,8 +66,16 @@ const clearErrorMessage = (dispatch) => () => {
   dispatch({ type: "clear_error_message" });
 };
 
+const automaticSignIn = (dispatch) => async () => {
+  const token = await AsyncStorage.getItem("token");
+  if (token) {
+    dispatch({ type: "signin", payload: token });
+    navigate("TrackList", "");
+  } else navigate("SignUp", "");
+};
+
 export const { Context, Provider } = createDataContext(
   authReducer,
-  { signIn, signOut, signUp, clearErrorMessage },
+  { signIn, signOut, signUp, clearErrorMessage, automaticSignIn },
   { token: null, errorMessage: "" }
 );
