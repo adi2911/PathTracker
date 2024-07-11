@@ -56,9 +56,10 @@ const signIn = (dispatch) => {
 };
 
 const signOut = (dispatch) => {
-  return ({ email, password }) => {
-    //api request to signout with the email and password
-    //if signup fails throw error
+  return async () => {
+    await AsyncStorage.removeItem("token");
+    dispatch({ type: "signout" });
+    navigate("loginFlow");
   };
 };
 

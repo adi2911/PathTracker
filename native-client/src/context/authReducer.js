@@ -7,6 +7,8 @@ export const authReducer = (state, action) => {
     case "signup":
     case "signin":
       return { token: action.payload, errorMessage: "" };
+    case "signout":
+      return { token: null, errorMessage: "" };
     default:
       return state;
   }
