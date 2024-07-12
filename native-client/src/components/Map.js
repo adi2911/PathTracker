@@ -1,28 +1,40 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import MapView, { Polyline } from "react-native-maps";
+import React, { useContext } from "react";
+import { ActivityIndicator, StyleSheet } from "react-native";
+import MapView, { Circle, Polyline } from "react-native-maps";
+import { Context as LocationContext } from "../context/LocationContext";
 
+const initialLocation = {
+  longitude: -122.0312186,
+  latitude: 37.33233141,
+};
 //Polyline is used to draw line.
 const Map = () => {
-  let points = [];
-  for (let i = 0; i < 20; i++) {
-    points.push({
-      latitude: 37.33233 + i * 0.001,
-      longitude: -122.03121 + i * 0.001,
-    });
-  }
-  return (
+  const {
+    state: { currentLocation },
+  } = useContext(LocationContext);
+
+  return currentLocation ? (
     <MapView
       initialRegion={{
-        latitude: 37.33233,
-        longitude: -122.03121,
+        ...initialLocation, //When using physical device location for testing , we have to use ...currentLocation.coords
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
       }}
       style={styles.map}
+
+      // region property will keep the map in the same region as that of initial region, if we try to drag around
+      // region={{  ...currentLocation.coords,   latitudeDelta: 0.01, longitudeDelta: 0.01}}
     >
       <Polyline coordinates={points} />
+      <Circle
+        center={currentLocation.coords}
+        radius={50}
+        strokeColor="rgba(158,158,255,1.0)"
+        fillColor="rgba(158,158,255,0.3)"
+      />
     </MapView>
+  ) : (
+    <ActivityIndicator size="large" style={{ marginTop: 200 }} />
   );
 };
 

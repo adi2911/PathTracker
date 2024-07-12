@@ -13,6 +13,8 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 
+import { Provider as LocationProvider } from "./src/context/LocationContext";
+
 const switchNavigator = createSwitchNavigator({
   AutomaticSignIn: AutomaticSignInScreen, //should be shown by default
   loginFLow: createStackNavigator({
@@ -32,12 +34,14 @@ const switchNavigator = createSwitchNavigator({
 const App = createAppContainer(switchNavigator);
 export default () => {
   return (
-    <AuthProvider>
-      <App
-        ref={(navigationObject) => {
-          setNavigator(navigationObject);
-        }}
-      />
-    </AuthProvider>
+    <LocationProvider>
+      <AuthProvider>
+        <App
+          ref={(navigationObject) => {
+            setNavigator(navigationObject);
+          }}
+        />
+      </AuthProvider>
+    </LocationProvider>
   );
 };
