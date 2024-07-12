@@ -34,4 +34,5 @@ const styles = StyleSheet.create({
     height: 300,
   },
 });
+
 export default TrackDetailScreen;

@@ -16,6 +16,18 @@ import TrackListScreen from "./src/screens/TrackListScreen";
 import { Provider as LocationProvider } from "./src/context/LocationContext";
 import { Provider as TrackProvider } from "./src/context/TrackContext";
 
+import { FontAwesome } from "@expo/vector-icons";
+
+const trackListFLow = createStackNavigator({
+  TrackList: TrackListScreen,
+  TrackDetail: TrackDetailScreen,
+});
+
+trackListFLow.navigationOptions = {
+  title: "Tracks", //title we show in the bottom navigator
+  tabBarIcon: <FontAwesome name="th-list" size={20} />,
+};
+
 const switchNavigator = createSwitchNavigator({
   AutomaticSignIn: AutomaticSignInScreen, //should be shown by default
   loginFLow: createStackNavigator({
@@ -23,10 +35,7 @@ const switchNavigator = createSwitchNavigator({
     SignInScreen: SignInScreen,
   }),
   mainFlow: createMaterialBottomNavigator({
-    trackListFLow: createStackNavigator({
-      TrackList: TrackListScreen,
-      TrackDetail: TrackDetailScreen,
-    }),
+    trackListFLow: trackListFLow,
     TrackCreate: TrackCreateScreen,
     Account: AccountScreen,
   }),
