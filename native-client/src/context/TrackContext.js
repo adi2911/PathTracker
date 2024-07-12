@@ -3,7 +3,10 @@ import createDataContext from "./createDataContext";
 import { trackReducer } from "./trackReducer";
 
 const fetchTrack = (dispatch) => {
-  return () => {};
+  return async () => {
+    const res = await trackApi.get("/tracks");
+    dispatch({ type: "fetch_tracks", payload: res.data });
+  };
 };
 
 const createTrack = (dispatch) => {
