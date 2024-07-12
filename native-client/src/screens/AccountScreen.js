@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { Button } from "react-native-elements";
-import Spacer from "../components/spacer";
+import Spacer from "../components/Spacer";
 import { Context as AuthContext } from "../context/AuthContext";
 
 const AccountScreen = () => {

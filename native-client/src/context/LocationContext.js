@@ -1,18 +1,34 @@
 import createDataContext from "./createDataContext";
 import { locationReducer } from "./locationReducer";
 
-const startRecording = (dispatch) => {};
-const stopRecording = (dispatch) => {};
+const startRecording = (dispatch) => {
+  return () => {
+    dispatch({ type: "start_recording" });
+  };
+};
+const stopRecording = (dispatch) => {
+  return () => {
+    dispatch({ type: "stop_recording" });
+  };
+};
 const addLocation = (dispatch) => {
-  return (location) => {
-    dispatch({ type: "add_location", payload: location });
+  return (location, recording) => {
+    dispatch({ type: "add_current_location", payload: location });
+    if (recording) dispatch({ type: "add_location", payload: location });
+  };
+};
+
+const changeName = (dispatch) => {
+  return (name) => {
+    dispatch({ type: "change_name", payload: name });
   };
 };
 
 export const { Context, Provider } = createDataContext(
   locationReducer,
-  { startRecording, stopRecording, addLocation },
+  { startRecording, stopRecording, addLocation, changeName },
   {
+    name: "",
     recording: false,
     locations: [],
     currentLocation: null,
