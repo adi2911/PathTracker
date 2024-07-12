@@ -7,35 +7,36 @@ import { useEffect, useState } from "react";
 
 export default (shouldStartTracking, locationUpdateCallback) => {
   const [error, setErr] = useState("");
-  const [subscriber, setSubscriber] = useState(null);
-  const startWatching = async () => {
-    try {
-      const { granted } = await requestForegroundPermissionsAsync();
-      if (!granted) {
-        throw new Error("Location permission not granted");
-      }
-      //check when user's location update
-      const sub = await watchPositionAsync(
-        {
-          accuracy: Accuracy.BestForNavigation,
-          timeInterval: 1000, //every 1 second update
-          distanceInterval: 10, // every 10 m update
-        },
-        locationUpdateCallback
-      );
-      setSubscriber(sub);
-    } catch (e) {
-      setErr(e);
-    }
-  };
 
   useEffect(() => {
+    let subscriber = null;
+    const startWatching = async () => {
+      try {
+        const { granted } = await requestForegroundPermissionsAsync();
+        if (!granted) {
+          throw new Error("Location permission not granted");
+        }
+        //check when user's location update
+        subscriber = await watchPositionAsync(
+          {
+            accuracy: Accuracy.BestForNavigation,
+            timeInterval: 1000, //every 1 second update
+            distanceInterval: 10, // every 10 m update
+          },
+          locationUpdateCallback
+        );
+      } catch (e) {
+        setErr(e);
+      }
+    };
+
     if (shouldStartTracking) {
       startWatching();
     } else {
       subscriber && subscriber.remove();
-      setSubscriber(null);
+      subscriber = null;
     }
+
     //ensuring multiple events are not triggered, each time we call start watching.
     // we clean up the previous event we were listening to.
     return () => {
