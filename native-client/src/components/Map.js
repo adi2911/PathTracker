@@ -10,7 +10,7 @@ const initialLocation = {
 //Polyline is used to draw line.
 const Map = () => {
   const {
-    state: { currentLocation },
+    state: { currentLocation, locations },
   } = useContext(LocationContext);
 
   return currentLocation ? (
@@ -25,7 +25,7 @@ const Map = () => {
       // region property will keep the map in the same region as that of initial region, if we try to drag around
       // region={{  ...currentLocation.coords,   latitudeDelta: 0.01, longitudeDelta: 0.01}}
     >
-      <Polyline coordinates={points} />
+      <Polyline coordinates={locations.map((location) => location.coords)} />
       <Circle
         center={currentLocation.coords}
         radius={50}

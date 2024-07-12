@@ -20,7 +20,8 @@ const TrackCreateScreen = ({ isFocused }) => {
     (location) => addLocation(location, recording);
   }, [recording]);
 
-  const [error] = useLocation(isFocused, updateLocationCallback);
+  //If we are recording, we should keep the location tracking on even if we are not on the same screen
+  const [error] = useLocation(isFocused || recording, updateLocationCallback);
 
   return (
     <SafeAreaView forceInset={{ tope: "always" }}>
