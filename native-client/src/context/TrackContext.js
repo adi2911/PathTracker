@@ -13,7 +13,9 @@ const createTrack = (dispatch) => {
         name,
         locations,
       });
-    } catch (err) {}
+    } catch (err) {
+      console.log("On createTrack ", err);
+    }
   };
 };
 

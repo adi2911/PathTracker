@@ -24,9 +24,21 @@ const changeName = (dispatch) => {
   };
 };
 
+const resetLocationContext = (dispatch) => {
+  return () => {
+    dispatch({ type: "reset" });
+  };
+};
+
 export const { Context, Provider } = createDataContext(
   locationReducer,
-  { startRecording, stopRecording, addLocation, changeName },
+  {
+    startRecording,
+    stopRecording,
+    addLocation,
+    changeName,
+    resetLocationContext,
+  },
   {
     name: "",
     recording: false,

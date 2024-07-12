@@ -10,6 +10,8 @@ export const locationReducer = (state, action) => {
       return { ...state, recording: false };
     case "change_name":
       return { ...state, name: action.payload };
+    case "reset":
+      return { ...state, name: "", locations: [] };
     default:
       return state;
   }
