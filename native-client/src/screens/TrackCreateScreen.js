@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native-elements";
 import { SafeAreaView, withNavigationFocus } from "react-navigation";
@@ -13,9 +13,15 @@ const TrackCreateScreen = ({ isFocused }) => {
     addLocation,
     state: { recording },
   } = useContext(LocationContext);
-  const [error] = useLocation(isFocused, (location) =>
-    addLocation(location, recording)
-  );
+
+  //updates the callback only when recording changes, not on all renders or updates
+  // prevent passing updated callback each time
+  const updateLocationCallback = useCallback(() => {
+    (location) => addLocation(location, recording);
+  }, [recording]);
+
+  const [error] = useLocation(isFocused, updateLocationCallback);
+
   return (
     <SafeAreaView forceInset={{ tope: "always" }}>
       <Text h2> Create a Track</Text>

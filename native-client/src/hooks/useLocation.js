@@ -30,12 +30,19 @@ export default (shouldStartTracking, locationUpdateCallback) => {
   };
 
   useEffect(() => {
-    if (shouldStartTracking) startWatching();
-    else {
+    if (shouldStartTracking) {
+      startWatching();
+    } else {
       subscriber && subscriber.remove();
       setSubscriber(null);
     }
-  }, [shouldStartTracking]);
+    //ensuring multiple events are not triggered, each time we call start watching.
+    // we clean up the previous event we were listening to.
+    return () => {
+      subscriber && subscriber.remove();
+    };
+  }, [shouldStartTracking, locationUpdateCallback]);
+  // locationUpdateCallback cannot pass as update directly , unless it is defined as a useCallback and only updates when required
 
   return [error];
 };
